@@ -20,7 +20,7 @@ The "probability of connection" was as important as node quantity when creating 
 
 The "probability of connection" was as important as node quantity when creating synthetic network data.  See the examples below which illustrate the various properties that come with different levels of network connectivity and node quantity.  Networks with many connections have fewer bottlenecks (fig 4.1, 4.2).  Highly interconnected networks with a large number of nodes look more like blobs than a traditional network, and the concept of clustering starts to break down (fig 4.2).  Conversely, a dense network with fewer connections tends to create a daisy chain of single failure points (fig 2.3) along the network.  A sparser network with fewer nodes is what comes to mind for most people and this type is also included (fig 1.3).  
 
-<< network_visuals
+![network types](https://github.com/peter-callahan/Network-Analysis/blob/main/Network%20Analysis/images/sample_network_visuals_with_clustering.png)
 
 ## Community Detection 
 
@@ -28,7 +28,7 @@ Community detection, or clustering, was performed using a package called CDlib, 
 
 The takeaway from community detection was that algorithm selection is critically important.  Visual inspection shows some algorithms produced starkly different results and so the underlying assumptions of each algorithm including expected use cases, must be well understood before adopting it in practice.  Failure to do this, or flipping casually between algorithms, would have either incomprehensible or undesirable results.
 
-<< community det
+![community detection algorithm](https://github.com/peter-callahan/Network-Analysis/blob/main/Network%20Analysis/images/community_detection_algos.png)
 
 ## Network Resiliency Analyses
 
@@ -36,25 +36,14 @@ To test the resiliency of a network one method discussed in the literature was t
 
 One question emerges quickly, what exactly does it mean to say that a network has disintegrated?  One way is to check if a network breaks into two unconnected networks after a node is lost.  Testing revealed this was an insufficient definition.  While eliminating nodes, if a node near the network edge were lost the network would separate into two parts, one large network and one small network of one or two nodes.  The majority of the network would clearly remain intact while the network would be declared disintegrated prematurely.  See the figure below.  To prevent this I added an additional measure to capture network "mass loss."  This is the total percentage of the network (in nodes) which was lost.  I redefined the notion of network disintegration to mean that a network must break into more than 1 network and lose more than 30% of its mass, as measured from the largest remaining network conglomerate.
 
-<< net disintegration
+![network disintegration](https://github.com/peter-callahan/Network-Analysis/blob/main/Network%20Analysis/images/network_disintegration.png)
 
 ## Resiliency Analysis of Different Network Types
 
 Expanding the network resiliency analysis to additional network types revealed new insights.  First, highly interconnected networks proved to be more resilient due to the increased number of redundant connections, which prevented network fragmentation.  Second, by running a network resiliency analysis multiple times (since nodes were removed at random) I was possible to locate vulnerabilities in some networks.  Networks that disintegrated when a lower number of nodes were removed had such vulnerabilities.  Even without a sophisticated method to target nodes, which were selected randomly, enough iterations of the network resiliency analysis resulted in identifying weak points to a surprising extent.    
 
-<< net performance
+![network performance](https://github.com/peter-callahan/Network-Analysis/blob/main/Network%20Analysis/images/network_performance.png)
 
 ## Conclusions
 
 2000 iterations of the network resiliency analysis were run for each of the networks expressed in the visuals above.  Note in the first example, the average number of nodes removed (per iteration) was 19.8.   However there is a scenario where removing only 6 key nodes reduced the size of the network from 132 to 88, resulting in network disintegration.  Additionally, we can see from the visual above (top left) that of the 6 critical nodes, 2 existed on the network edge and are clearly not critical.  Excluding these results in identification of 4 critical nodes, without which the network cannot continue to operate.  Said another way, this network is exposed to a worst case scenario and contains a substantial weak point.  Contrast this with the second example where 88 nodes were removed from the network in the worst case without the network reaching the disintegration threshold.  The average number of nodes removed per iteration is also 88, indicating no weak point or bottleneck.  The interconnectivity of the second network allows the network to sustain high node loss and maintain continuity. 
-
-
-
-
-
-
-
-
-
-
-
